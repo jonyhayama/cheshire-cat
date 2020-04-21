@@ -9,7 +9,7 @@ module Api
       def create
         record = Record.new(record_params)
         if record.save
-          render json: { dns_records: record }, status: :ok
+          render json: { id: record.id }, status: :ok
         else
           render json: { data: record.errors }, status: :unprocessable_entity
         end
