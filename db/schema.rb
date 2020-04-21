@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_21_102803) do
+ActiveRecord::Schema.define(version: 2020_04_21_103447) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,6 +19,13 @@ ActiveRecord::Schema.define(version: 2020_04_21_102803) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "hostnames_records", id: false, force: :cascade do |t|
+    t.bigint "hostname_id", null: false
+    t.bigint "record_id", null: false
+    t.index ["hostname_id", "record_id"], name: "index_hostnames_records_on_hostname_id_and_record_id"
+    t.index ["record_id", "hostname_id"], name: "index_hostnames_records_on_record_id_and_hostname_id"
   end
 
   create_table "records", force: :cascade do |t|

@@ -18,7 +18,7 @@ module Api
       private
 
       def record_params
-        params.permit(:ip)
+        params.permit(:ip, hostnames_attributes: [ :name ])
       end
 		end
 	end
