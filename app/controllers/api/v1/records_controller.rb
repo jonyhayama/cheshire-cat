@@ -10,8 +10,8 @@ module Api
         records = records.where('hostnames.name IN (?)', params[:included]) if params[:included].present?
         records = records.where('records.id NOT IN (?)', excluded) if excluded.present?
         records = records.select('records.id', 'records.ip', 'COUNT(hostnames.name) as count').group('records.id')
-        records = records.to_a
-        records = records.select{ |r| r.count == params[:included].count } if params[:included].present?
+        records = Record.unscoped.select('*').from(records, :subquery)
+        records = records.where('subquery.count = ?', params[:included].count) if params[:included].present?
         total_records = records.count
 
         records_ids = records.pluck(:id)
